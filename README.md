@@ -16,6 +16,16 @@ If you need a routing package I recommend [Reach Router](https://github.com/reac
 ## Styled Components
 I might move over my styled-components lib to fix some of the imports, since they're a bit wacky with the type definitions.
 
+## Setup
+
+```
+yarn install
+```
+or
+```
+npm install
+```
+
 ## Scripts
 To start the dev server:
 ```
