@@ -1,4 +1,5 @@
 node_modules/
+entry/
 
 yarn.lock
 package-lock.json
