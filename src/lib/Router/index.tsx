@@ -25,22 +25,25 @@ export const Router = ({children}: any) => {
   }
   // for now we're going to loop over the array of children, just to see what's going on.
   // @ts-ignore
-  children.forEach(child => {
+  const picked = children.filter(child => {
     // check if child is a valid type;
     if(typeof child.type !== 'function') {
-      console.warn(`Component of type ${child.type} is not a valid Router child.`)
-      return null;
+      console.warn(`Component of type ${child.type} is not a valid Router child.`);
+      return false;
     }
     // now we check for a route in our child's props;
     if(!child.props.route) {
       console.error(`No route prop provided to Component ${child.type.displayName}`);
-      return null;
+      return false;
     }
+    console.log(child);
     const { route } = child.props;
     console.log(`${child.type.displayName} + ${route}`);
+    return true;
   });
+  console.log(picked);
   // return all children for now because we're not comparing anything yet.
   return (
-    children
+    picked
   )
 };
