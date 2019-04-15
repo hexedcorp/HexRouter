@@ -23,7 +23,11 @@ export const Router = ({children}: any) => {
     console.error('No children provided to the Router.');
     return null;
   }
-  // for now we're going to loop over the array of children, just to see what's going on.
+  // check if more than one child, if not then we just need to match it and render it if history is good;
+  if(!Array.isArray(children)) {
+    return children;
+  }
+  // filter the good kids from the bad kids and then render them. (for now)
   // @ts-ignore
   const picked = children.filter(child => {
     // check if child is a valid type;
@@ -36,13 +40,10 @@ export const Router = ({children}: any) => {
       console.error(`No route prop provided to Component ${child.type.displayName}`);
       return false;
     }
-    console.log(child);
     const { route } = child.props;
     console.log(`${child.type.displayName} + ${route}`);
     return true;
   });
-  console.log(picked);
-  // return all children for now because we're not comparing anything yet.
   return (
     picked
   )
