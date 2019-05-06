@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useForceUpdate } from './forceUpdate';
-
+import {Helper} from './helpers';
 // react will get mad if people don't use this with typescript;
 export type HexRouterComponentProps<TParams = {}> = Partial<TParams> & {
   route?: string;
@@ -40,11 +40,24 @@ export const Router = ({children}: any) => {
       console.error(`No route prop provided to Component ${child.type.displayName}`);
       return false;
     }
+    console.log(Helper.location);
     const { route } = child.props;
     console.log(`${child.type.displayName} + ${route}`);
     return true;
   });
+  console.log(Helper.matchRoutes(picked));
   return (
-    picked
+    Helper.matchRoutes(picked)
   )
 };
+
+interface LinkInterface {
+    to: string,
+    children: any
+}
+
+export const Link = ({to, children}: LinkInterface) => {
+    return (
+        <a onClick={() => Helper.goTo(to) }>{children}</a>
+    )
+}
