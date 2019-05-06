@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { createGlobalStyle } from 'styled-components';
-import { HexRouterComponentProps, Router } from '../lib/Router';
+import { HexRouterComponentProps, Router, Link } from '../lib/Router';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700');
@@ -36,11 +36,22 @@ const TestFuncComponent = (_: HexRouterComponentProps) => {
     </>
   )
 };
+
+const Home = (_: HexRouterComponentProps) => {
+    return (
+        <>
+            <h1>Home</h1>
+            <Link to="hey">click me noob</Link>
+        </>
+    )
+}
+
 const App = hot(() => (
   <>
     <GlobalStyle />
     <Router>
       <h1>H1 Element Works!</h1>
+      <Home route="/" default />
       <TestFuncComponent route="/home"/>
       <TestClassComponent route="/hey"/>
     </Router>
