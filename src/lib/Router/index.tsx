@@ -7,7 +7,7 @@ export type HexRouterComponentProps<TParams = {}> = Partial<TParams> & {
   default?: boolean;
   uri?: string;
 };
-
+/* need to create a pushState event so i can force a render */
 export const Router = ({children}: any) => {
   // hook to force component to update.
   const forceUpdate = useForceUpdate();
