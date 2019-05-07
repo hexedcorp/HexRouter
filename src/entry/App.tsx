@@ -41,7 +41,7 @@ const Home = (_: HexRouterComponentProps) => {
     return (
         <>
             <h1>Home</h1>
-            <Link to="hey">click me noob</Link>
+            <Link transitionDelay={300} to="hey">click me noob</Link>
         </>
     )
 }

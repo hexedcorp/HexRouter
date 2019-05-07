@@ -7,9 +7,10 @@ export type HexRouterComponentProps<TParams = {}> = Partial<TParams> & {
   default?: boolean;
   uri?: string;
 };
+
 export const Router = ({children}: any) => {
   // hook to force component to update.
-  const forceUpdate = useForceUpdate;
+  const forceUpdate = useForceUpdate();
   // add event listener for popstate on mount and unmount via effect.
   React.useEffect(() => {
     // componentDidMount sorta
@@ -18,7 +19,7 @@ export const Router = ({children}: any) => {
     return () => removeEventListener('popstate', forceUpdate);
     // empty param so it's only called when component mounts and un-mounts.
   }, []);
-  // lets be annoying about the router not having any company.
+    // lets be annoying about the router not having any company.
   if(!children) {
     console.error('No children provided to the Router.');
     return null;
@@ -40,12 +41,10 @@ export const Router = ({children}: any) => {
       console.error(`No route prop provided to Component ${child.type.displayName}`);
       return false;
     }
-    console.log(Helper.location);
     const { route } = child.props;
-    console.log(`${child.type.displayName} + ${route}`);
     return true;
   });
-  console.log(Helper.matchRoutes(picked));
+  console.log("after clicking back", Helper.matchRoutes(picked))
   return (
     Helper.matchRoutes(picked)
   )
@@ -54,10 +53,21 @@ export const Router = ({children}: any) => {
 interface LinkInterface {
     to: string,
     children: any
+    transitionDelay: number
 }
 
-export const Link = ({to, children}: LinkInterface) => {
+export const Link = ({to, children, transitionDelay}: LinkInterface) => {
+    /* need to create a transition toggle so that I can kill pending transitions when a user clicks another link. */
+    const [Transitioning, setTransitioning] = React.useState(false);
     return (
-        <a onClick={() => Helper.goTo(to) }>{children}</a>
+        <a onClick={() => {
+            if(!Transitioning) {
+                setTransitioning(!Transitioning);
+                Helper.goTo(to, transitionDelay);
+            } else {
+                return;
+            }
+        }
+        }>{children}</a>
     )
 }
